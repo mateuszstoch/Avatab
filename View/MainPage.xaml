@@ -1,10 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Avatab.MainPage">
+             x:Class="Avatab.MainPage"
+             xmlns:vm="clr-namespace:Avatab.ViewModel"
+             xmlns:model="clr-namespace:Avatab.Model"
+             x:DataType="vm:MainViewModel"
+             >
 
-    <FlexLayout>
-        
-    </FlexLayout>
-
+    <RefreshView Command="{Binding refreshCommand}">
+        <CollectionView ItemsSource="{Binding DBPeople}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:DBPerson">
+                    <Frame>
+                        <Frame.Style>
+                                <Style TargetType="Frame">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding isOccupied}" Value="True" TargetType="Frame">
+                                            <Setter Property="Background" Value="Red" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Frame.Style>
+                        <Label Text="{Binding name}"></Label>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+       
+    </RefreshView>
 </ContentPage>
+    

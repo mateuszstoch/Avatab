@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Avatab.Services;
+using Avatab.Services.Interfaces;
+using Avatab.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace Avatab
 {
@@ -18,6 +21,15 @@ namespace Avatab
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            //pages
+            builder.Services.AddSingleton<MainPage>();
+
+            //view models
+            builder.Services.AddSingleton<MainViewModel>();
+
+
+            //services
+            builder.Services.AddSingleton<IDatabaseService,DatabaseService>();
 
             return builder.Build();
         }
