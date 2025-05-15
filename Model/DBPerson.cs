@@ -3,7 +3,7 @@ using SQLite;
 
 namespace Avatab.Model
 {
-    public partial class DBPerson 
+    public class DBPerson 
     {
         [PrimaryKey, AutoIncrement]
         public int Id {  get; set; }
@@ -12,6 +12,6 @@ namespace Avatab.Model
         public bool isOccupied { get; set; }
 
 
-        public DBPerson() { }
+        public DBPerson() {}
     }
 }

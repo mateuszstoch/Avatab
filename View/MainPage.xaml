@@ -6,8 +6,31 @@
              xmlns:model="clr-namespace:Avatab.Model"
              x:DataType="vm:MainViewModel"
              >
+    <StackLayout>
+        <AbsoluteLayout
+             VerticalOptions="Start"
+             HorizontalOptions="End">
+            <AbsoluteLayout.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="HeightRequest" Value="50" />
+                    <Setter Property="WidthRequest" Value="50" />
+                    <Setter Property="FontSize" Value="30"/>
+                </Style>
+            </AbsoluteLayout.Resources>
+            <Button
+                Margin="10"
+                Text="+"
+                Padding="0"
+                Background="White"
+                TextColor="Black"
+                BorderColor="DarkGrey"
+                BorderWidth="1"
+                CornerRadius="50"
+               
+                Command="{Binding importCommand}" />
+        </AbsoluteLayout>
 
-    <RefreshView Command="{Binding refreshCommand}">
+        <RefreshView Command="{Binding refreshCommand}">
         <CollectionView ItemsSource="{Binding DBPeople}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:DBPerson">
@@ -27,6 +50,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
        
-    </RefreshView>
+        </RefreshView>
+    </StackLayout>
 </ContentPage>
     

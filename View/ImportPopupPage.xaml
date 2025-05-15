@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             x:Class="Avatab.View.ImportPopupPage"
+           >
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Import CSV" FontAttributes="Bold" FontSize="20" />
+        <Button Text="Pick CSV File" Command="{Binding PickFileCommand}" />
+        <Label Text="{Binding ImportStatus}" TextColor="Green" />
+        <CollectionView ItemsSource="{Binding ImportedPeople}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="{Binding Name}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Text="Close" Clicked="OnCloseClicked" />
+    </VerticalStackLayout>
+</mct:Popup>
