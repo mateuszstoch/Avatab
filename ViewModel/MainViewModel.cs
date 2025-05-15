@@ -12,10 +12,22 @@ namespace Avatab.ViewModel
         private List<DBPerson> dBPeople;
         private IDatabaseService databaseService = databaseService;
 
+
         [RelayCommand]
         public void refresh()
         {
-            //check who is occupied
+            DBPeople = databaseService.GetAllPeople();
+            foreach(DBPerson person in DBPeople)
+            {
+                
+            }
+
+        }
+
+        [RelayCommand]
+        public void import()
+        {
+            
         }
 
     }

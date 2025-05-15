@@ -1,7 +1,10 @@
 ﻿using Avatab.Services;
 using Avatab.Services.Interfaces;
 using Avatab.ViewModel;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+
+
 
 namespace Avatab
 {
@@ -12,6 +15,7 @@ namespace Avatab
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -19,7 +23,7 @@ namespace Avatab
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+                builder.Logging.AddDebug();
 #endif
             //pages
             builder.Services.AddSingleton<MainPage>();
