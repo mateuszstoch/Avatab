@@ -1,6 +1,7 @@
 ﻿using Avatab.Model;
 using Avatab.Services;
 using Avatab.Services.Interfaces;
+using Avatab.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -19,7 +20,14 @@ namespace Avatab.ViewModel
             DBPeople = databaseService.GetAllPeople();
             foreach(DBPerson person in DBPeople)
             {
-                
+                if (databaseService.GetLectures(person.Id, DateTime.Now).Count > 0)
+                {
+                    person.isOccupied = true;
+                }
+                else
+                {
+                    person.isOccupied = false;
+                }
             }
 
         }
@@ -27,7 +35,7 @@ namespace Avatab.ViewModel
         [RelayCommand]
         public void import()
         {
-            
+
         }
 
     }
