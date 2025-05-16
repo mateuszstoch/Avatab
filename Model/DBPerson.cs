@@ -8,7 +8,6 @@ namespace Avatab.Model
         [PrimaryKey, AutoIncrement]
         public int Id {  get; set; }
         public string name { get; set; }
-        public List<DBLecture> timeTable;
         public bool isOccupied { get; set; }
 
 

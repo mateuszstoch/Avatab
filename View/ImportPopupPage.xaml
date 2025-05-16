@@ -5,16 +5,12 @@
              x:Class="Avatab.View.ImportPopupPage"
            >
     <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Name" FontAttributes="Bold" FontSize="20" />
+        <Entry Text="{Binding Name}"></Entry>
         <Label Text="Import CSV" FontAttributes="Bold" FontSize="20" />
         <Button Text="Pick CSV File" Command="{Binding PickFileCommand}" />
         <Label Text="{Binding ImportStatus}" TextColor="Green" />
-        <CollectionView ItemsSource="{Binding ImportedPeople}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Label Text="{Binding Name}" />
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
         <Button Text="Close" Clicked="OnCloseClicked" />
+        <Button Text="Import" Command="{Binding ImportCommand}" />
     </VerticalStackLayout>
 </mct:Popup>

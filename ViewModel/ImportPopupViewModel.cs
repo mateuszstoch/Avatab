@@ -1,32 +1,36 @@
 ﻿using Avatab.Model;
+using Avatab.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Avatab.ViewModel
 {
     public partial class ImportPopupViewModel : ObservableObject
     {
-        [ObservableProperty]
+        public ImportPopupViewModel(IDatabaseService _databaseService) {
+            databaseService = _databaseService;
+        }
+
+        private IDatabaseService databaseService;
         private int parentId;
 
         [ObservableProperty]
-        private string importStatus;
-        public ICommand PickFileCommand => new AsyncRelayCommand(PickFileAndParse);
+        private string name;
 
-        private async Task PickFileAndParse()
+        [ObservableProperty]
+        private string importStatus;
+
+        private List<DBLecture> lectures = new List<DBLecture>();
+
+        [RelayCommand]
+        private async Task PickFile()
         {
+            if (Name != String.Empty) return;
+            parentId = databaseService.AddPerson(new DBPerson { name = Name });
             try
             {
                 var result = await FilePicker.PickAsync();
                 if (result == null) return;
-
-                var people = new List<DBLecture>();
 
                 using var stream = await result.OpenReadAsync();
                 using var reader = new StreamReader(stream);
@@ -41,7 +45,7 @@ namespace Avatab.ViewModel
                     var parts = line.Split(';');
                     if (parts.Length < 10) continue;
                     char lectureType = parts[6].Trim()[0];
-                    people.Add(new DBLecture(
+                    lectures.Add(new DBLecture(
                         parts[3].Trim(),
                         parts[4],
                         lectureType == 'w' ? LectureType.wyklad : lectureType == 'ć' ? LectureType.cwiczenia : LectureType.lektorat,
@@ -49,14 +53,22 @@ namespace Avatab.ViewModel
                         parts[9].Trim(),
                         DateTime.Parse(parts[7].Trim()),
                         parts[10].Trim() + ' ' + parts[11].Trim(),
-                        ParentId));
+                        parentId));
                 }
-
+                ImportStatus = "Success";
 
             }
             catch (Exception ex)
             {
                 ImportStatus = $"Error: {ex.Message}";
+            }
+        }
+        [RelayCommand]
+        private void Import()
+        {
+            foreach(DBLecture lecture in lectures)
+            {
+                databaseService.AddLecture(lecture);
             }
         }
     }
