@@ -59,6 +59,13 @@ namespace Avatab.ViewModel
             this.Refresh();
         }
 
+        [RelayCommand]
+        public void Delete(DBPerson person)
+        {
+            databaseService.DeletePerson(person.Id);
+            this.Refresh();
+        }
+
 
     }
 }
