@@ -51,8 +51,10 @@ namespace Avatab.ViewModel
         [RelayCommand]
         public async void Import()
         {
-            List<DBLecture> output = (List<DBLecture>)await App.Current.MainPage.ShowPopupAsync(new ImportPopupPage(importPopupViewModel));
-            foreach (DBLecture lecture in output)
+
+            var output = await App.Current.MainPage.ShowPopupAsync(new ImportPopupPage(importPopupViewModel));
+            if (output == null) return;
+            foreach (DBLecture lecture in (List<DBLecture>)output)
             {
                 databaseService.AddLecture(lecture);
             }

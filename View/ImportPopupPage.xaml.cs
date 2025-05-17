@@ -1,4 +1,3 @@
-using Avatab.Model;
 using Avatab.ViewModel;
 using CommunityToolkit.Maui.Views;
 
@@ -16,7 +15,7 @@ public partial class ImportPopupPage : Popup
 
     private void OnCloseClicked(object sender, EventArgs e)
     {
-        this.Close(new List<DBLecture>());
+        this.Close();
     }
 
     private void OnImportClicked(object sender, EventArgs e)
