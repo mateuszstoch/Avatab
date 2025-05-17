@@ -1,69 +1,79 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             xmlns:converters="clr-namespace:Avatab.Converters"
              x:Class="Avatab.MainPage"
              xmlns:vm="clr-namespace:Avatab.ViewModel"
              xmlns:model="clr-namespace:Avatab.Model"
              x:DataType="vm:MainViewModel"
+             BackgroundColor="#F5F5F5"
              >
-    <StackLayout>
-        <AbsoluteLayout
-             VerticalOptions="Start"
-             HorizontalOptions="End">
-            <AbsoluteLayout.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="HeightRequest" Value="50" />
-                    <Setter Property="WidthRequest" Value="50" />
-                    <Setter Property="FontSize" Value="30"/>
-                </Style>
-            </AbsoluteLayout.Resources>
-            <Button
-                Margin="10"
-                Text="+"
-                Padding="0"
-                Background="White"
-                TextColor="Black"
-                BorderColor="DarkGrey"
-                BorderWidth="1"
-                CornerRadius="50"
-               Command="{Binding ImportCommand}"
-                 />
-        </AbsoluteLayout>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-        <RefreshView Command="{Binding RefreshCommand}" >
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Floating Action Button -->
+        <Grid Grid.Row="0" Padding="16">
+            <Label Text="Availability"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#333"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start" />
+            <Button
+                Text="+"
+                Command="{Binding ImportCommand}"
+                BackgroundColor="White"
+                TextColor="Black"
+                BorderColor="DarkGray"
+                BorderWidth="1"
+                CornerRadius="25"
+                WidthRequest="50"
+                HeightRequest="50"
+                FontSize="28"
+                Padding="0"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                AbsoluteLayout.LayoutBounds="1,0,AutoSize,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional" />
+        </Grid>
+
+        <!-- RefreshView and CollectionView -->
+        <RefreshView Grid.Row="1"
+                     Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
             <CollectionView ItemsSource="{Binding DBPeople}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:DBPerson">
                         <SwipeView>
                             <SwipeView.LeftItems>
-                                <SwipeItems Mode="Reveal">
-                                    <SwipeItem
-                                    Text="Delete"
-                                    BackgroundColor="IndianRed" 
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
-                                        CommandParameter="{Binding .}"
-                                    />
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem Text="Delete"
+                                               BackgroundColor="#F44336"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
+                                               CommandParameter="{Binding .}" />
                                 </SwipeItems>
                             </SwipeView.LeftItems>
-                            <Frame>
-                                <Frame.Style>
-                                    <Style TargetType="Frame">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding isOccupied}" Value="True" TargetType="Frame">
-                                                <Setter Property="Background" Value="Red" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Frame.Style>
-                                <Label Text="{Binding name}" />
+
+                            <Frame Padding="12"
+                                   Margin="0,4"
+                                   BackgroundColor="White"
+                                   CornerRadius="12"
+                                   HasShadow="True"
+                                   BorderColor="{Binding isOccupied, Converter={StaticResource BoolToColorConverter}}">
+                                <Label Text="{Binding name}"
+                                       FontSize="18"
+                                       TextColor="#222" />
                             </Frame>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
         </RefreshView>
-    </StackLayout>
+    </Grid>
 </ContentPage>
-    
