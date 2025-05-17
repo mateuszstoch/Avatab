@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Avatab.Constants
+﻿namespace Avatab.Constants
 {
-    public static class DatabaseConstants 
+    public static class DatabaseConstants
     {
         public const string DatabaseFilename = "TimeTables.db3";
 

@@ -1,16 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using SQLite;
+﻿using SQLite;
 
 namespace Avatab.Model
 {
-    public class DBPerson 
+    public class DBPerson
     {
         [PrimaryKey, AutoIncrement]
-        public int Id {  get; set; }
+        public int Id { get; set; }
         public string name { get; set; }
         public bool isOccupied { get; set; }
 
 
-        public DBPerson() {}
+        public DBPerson() { }
     }
 }

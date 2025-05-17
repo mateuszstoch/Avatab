@@ -1,3 +1,4 @@
+using Avatab.Model;
 using Avatab.ViewModel;
 using CommunityToolkit.Maui.Views;
 
@@ -5,15 +6,22 @@ namespace Avatab.View;
 
 public partial class ImportPopupPage : Popup
 {
-	public ImportPopupPage(ImportPopupViewModel vm)
-	{
-		InitializeComponent();
-		BindingContext = vm;
-	}
+    ImportPopupViewModel viewModel;
+    public ImportPopupPage(ImportPopupViewModel vm)
+    {
+        InitializeComponent();
+        viewModel = vm;
+        BindingContext = vm;
+    }
 
     private void OnCloseClicked(object sender, EventArgs e)
     {
-        Close();
+        this.Close(new List<DBLecture>());
+    }
+
+    private void OnImportClicked(object sender, EventArgs e)
+    {
+        this.Close(viewModel.Lectures);
     }
 
 }

@@ -1,24 +1,39 @@
 ﻿using Avatab.Model;
-using Avatab.Services;
 using Avatab.Services.Interfaces;
 using Avatab.View;
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace Avatab.ViewModel
 {
-    public partial class MainViewModel(IDatabaseService databaseService) : ObservableObject
+    public partial class MainViewModel : ObservableObject
     {
+        private IDatabaseService databaseService;
+
         [ObservableProperty]
         private List<DBPerson> dBPeople;
-        private IDatabaseService databaseService = databaseService;
+        private ImportPopupViewModel importPopupViewModel;
+        public MainViewModel(IDatabaseService _databaseService, ImportPopupViewModel _importPopupViewModel)
+        {
+            databaseService = _databaseService;
+            DBPeople = new List<DBPerson>();
+            importPopupViewModel = _importPopupViewModel;
+            isRefreshing = false;
+            this.Refresh();
+        }
+
+        [ObservableProperty]
+        private bool isRefreshing;
+
 
 
         [RelayCommand]
-        public void refresh()
+        public void Refresh()
         {
+            IsRefreshing = true;
             DBPeople = databaseService.GetAllPeople();
-            foreach(DBPerson person in DBPeople)
+            foreach (DBPerson person in DBPeople)
             {
                 if (databaseService.GetLectures(person.Id, DateTime.Now).Count > 0)
                 {
@@ -29,14 +44,21 @@ namespace Avatab.ViewModel
                     person.isOccupied = false;
                 }
             }
+            IsRefreshing = false;
 
         }
 
         [RelayCommand]
-        public void import()
+        public async void Import()
         {
-
+            List<DBLecture> output = (List<DBLecture>)await App.Current.MainPage.ShowPopupAsync(new ImportPopupPage(importPopupViewModel));
+            foreach (DBLecture lecture in output)
+            {
+                databaseService.AddLecture(lecture);
+            }
+            this.Refresh();
         }
+
 
     }
 }
