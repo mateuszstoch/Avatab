@@ -11,7 +11,7 @@ namespace Avatab.Services.Interfaces
         public List<DBPerson> GetAllPeople();
         public void UpdatePerson(DBPerson person);
         public void UpdateLecture(int lectureId, DBLecture lecture);
-        public void DeletePerson(DBPerson person);
+        public void DeletePerson(long id);
         public void DeleteLecture(int lectureId);
 
 

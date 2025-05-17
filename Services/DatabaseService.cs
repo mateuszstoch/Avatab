@@ -46,9 +46,14 @@ namespace Avatab.Services
             throw new NotImplementedException();
         }
 
-        public void DeletePerson(DBPerson person)
+        public void DeletePerson(long id)
         {
-            throw new NotImplementedException();
+            using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
+            {
+                con.Query<DBLecture>("delete from DBLecture where parentId=?", [id]);
+                con.Delete<DBPerson>(id);
+                con.Close();
+            }
         }
 
         public List<DBLecture> GetAllDays(int parentId)

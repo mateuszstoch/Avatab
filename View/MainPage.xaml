@@ -31,26 +31,38 @@
                  />
         </AbsoluteLayout>
 
-        <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" >
-        <CollectionView ItemsSource="{Binding DBPeople}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:DBPerson">
-                    <Frame>
-                        <Frame.Style>
-                                <Style TargetType="Frame">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding isOccupied}" Value="True" TargetType="Frame">
-                                            <Setter Property="Background" Value="Red" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Frame.Style>
-                        <Label Text="{Binding name}"></Label>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-       
+        <RefreshView Command="{Binding RefreshCommand}" >
+            <CollectionView ItemsSource="{Binding DBPeople}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:DBPerson">
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem
+                                    Text="Delete"
+                                    BackgroundColor="IndianRed" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
+                                        CommandParameter="{Binding .}"
+                                    />
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <Frame>
+                                <Frame.Style>
+                                    <Style TargetType="Frame">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isOccupied}" Value="True" TargetType="Frame">
+                                                <Setter Property="Background" Value="Red" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Frame.Style>
+                                <Label Text="{Binding name}" />
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
         </RefreshView>
     </StackLayout>
 </ContentPage>
