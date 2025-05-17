@@ -1,5 +1,6 @@
 ﻿using Avatab.Services;
 using Avatab.Services.Interfaces;
+using Avatab.View;
 using Avatab.ViewModel;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
@@ -23,17 +24,19 @@ namespace Avatab
                 });
 
 #if DEBUG
-                builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
             //pages
             builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<ImportPopupPage>();
 
             //view models
             builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<ImportPopupViewModel>();
 
 
             //services
-            builder.Services.AddSingleton<IDatabaseService,DatabaseService>();
+            builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
 
             return builder.Build();
         }

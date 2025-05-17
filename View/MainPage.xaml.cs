@@ -10,7 +10,6 @@ namespace Avatab
             BindingContext = vm;
         }
 
-       
     }
 
 }

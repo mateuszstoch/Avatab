@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
              x:Class="Avatab.MainPage"
              xmlns:vm="clr-namespace:Avatab.ViewModel"
              xmlns:model="clr-namespace:Avatab.Model"
@@ -26,11 +27,11 @@
                 BorderColor="DarkGrey"
                 BorderWidth="1"
                 CornerRadius="50"
-               
-                Command="{Binding importCommand}" />
+               Command="{Binding ImportCommand}"
+                 />
         </AbsoluteLayout>
 
-        <RefreshView Command="{Binding refreshCommand}">
+        <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" >
         <CollectionView ItemsSource="{Binding DBPeople}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:DBPerson">

@@ -1,16 +1,16 @@
-﻿using Android.Icu.Util;
+﻿
 using Avatab.Constants;
 using Avatab.Model;
 using Avatab.Services.Interfaces;
-using Bumptech.Glide.Load;
 using SQLite;
-using System.Data.Common;
+
 
 namespace Avatab.Services
 {
     public class DatabaseService : IDatabaseService
     {
-        public DatabaseService() {
+        public DatabaseService()
+        {
             using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
             {
                 con.CreateTable<DBLecture>();
@@ -30,18 +30,15 @@ namespace Avatab.Services
             }
         }
 
-        public int AddPerson(DBPerson person)
+        public void AddPerson(DBPerson person)
         {
-            int id;
             using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
             {
                 con.BeginTransaction();
                 con.Insert(person);
                 con.Commit();
-                id = con.Query<int>("select top 1 [Id] from _tablename order by [Id] desc")[0]; 
                 con.Close();
             }
-            return id;
         }
 
         public void DeleteLecture(int lectureId)
@@ -60,7 +57,7 @@ namespace Avatab.Services
             using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
             {
                 output = con.Query<DBLecture>("select * from DBLecture where parentId=?", [parentId.ToString()]);
-                con.Close() ;
+                con.Close();
             }
             return output;
         }
@@ -74,14 +71,17 @@ namespace Avatab.Services
                 con.Close();
             }
             return output;
-             
+
         }
-        public List<DBLecture> GetLectures(int parentId,DateTime date)
+        public List<DBLecture> GetLectures(int parentId, DateTime date)
         {
             List<DBLecture> output;
+            string time = "";
+            time = date.Hour + ":" + date.Minute + ":" + date.Second;
             using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
             {
-                output = con.Query<DBLecture>("select * from DBLecture where parentId=? and timeStart < ? and timeEnd > ? and date=?", [parentId.ToString(), date.TimeOfDay, date.TimeOfDay, date.Date]);
+                SQLiteCommand cmd = con.CreateCommand("select * from DBLecture where parentId=? and timeStart < ? and timeEnd > ? and date=?", parentId, time, time, date.Date.Ticks);
+                output = cmd.ExecuteQuery<DBLecture>();
                 con.Close();
             }
             return output;
