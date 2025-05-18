@@ -113,7 +113,7 @@
                                            TextColor="Black"/>
 
                                     <Label Grid.Row="0" Grid.Column="1"
-                                           Text="{Binding timeStart}"
+                                           Text="{Binding TimeRange}"
                                            FontSize="14"
                                            TextColor="DarkGray"
                                            HorizontalTextAlignment="End"/>
