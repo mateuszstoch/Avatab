@@ -3,10 +3,10 @@ using CommunityToolkit.Maui.Views;
 
 namespace Avatab.View;
 
-public partial class ImportPopupPage : Popup
+public partial class ImportPopup : Popup
 {
     ImportPopupViewModel viewModel;
-    public ImportPopupPage(ImportPopupViewModel vm)
+    public ImportPopup(ImportPopupViewModel vm)
     {
         InitializeComponent();
         viewModel = vm;

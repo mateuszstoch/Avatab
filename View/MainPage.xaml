@@ -18,7 +18,7 @@
     <Grid RowDefinitions="Auto,*">
 
         <!-- Floating Action Button -->
-        <Grid Grid.Row="0" Padding="16">
+        <Grid Grid.Row="0" Padding="16" >
             <Label Text="Availability"
                    FontSize="28"
                    FontAttributes="Bold"
@@ -39,8 +39,7 @@
                 Padding="0"
                 HorizontalOptions="End"
                 VerticalOptions="Start"
-                AbsoluteLayout.LayoutBounds="1,0,AutoSize,AutoSize"
-                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                />
         </Grid>
 
         <!-- RefreshView and CollectionView -->
@@ -54,6 +53,7 @@
                             <SwipeView.LeftItems>
                                 <SwipeItems Mode="Execute">
                                     <SwipeItem Text="Delete"
+                                               IconImageSource="delete.png"
                                                BackgroundColor="#F44336"
                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
                                                CommandParameter="{Binding .}" />
@@ -65,10 +65,28 @@
                                    BackgroundColor="White"
                                    CornerRadius="12"
                                    HasShadow="True"
-                                   BorderColor="{Binding isOccupied, Converter={StaticResource BoolToColorConverter}}">
-                                <Label Text="{Binding name}"
-                                       FontSize="18"
-                                       TextColor="#222" />
+                                   BorderColor="{Binding isOccupied, Converter={StaticResource BoolToColorConverter}}"
+                                   >
+                                <Grid ColumnDefinitions="auto, *">
+                                    <Label Text="{Binding name}"
+                                           FontSize="18"
+                                           TextColor="#222" 
+                                           Grid.Column="0"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Start"
+                                           />
+                                    <ImageButton 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=EditCommand }" 
+                                        CommandParameter="{Binding .}" 
+                                        BackgroundColor="Transparent"
+                                        Source="edit.png"
+                                        Margin="10,0"
+                                        Grid.Column="1"
+                                        WidthRequest="30"
+                                        HeightRequest="30"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End"/>
+                                </Grid>
                             </Frame>
                         </SwipeView>
                     </DataTemplate>

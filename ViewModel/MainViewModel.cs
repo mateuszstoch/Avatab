@@ -35,7 +35,7 @@ namespace Avatab.ViewModel
             DBPeople = databaseService.GetAllPeople();
             foreach (DBPerson person in DBPeople)
             {
-                if (databaseService.GetLectures(person.Id, DateTime.Now).Count > 0)
+                if (databaseService.GetLectureOnTime(person.Id, DateTime.Now).Count > 0)
                 {
                     person.isOccupied = true;
                 }
@@ -52,7 +52,7 @@ namespace Avatab.ViewModel
         public async void Import()
         {
             importPopupViewModel.reset();
-            var output = await App.Current.MainPage.ShowPopupAsync(new ImportPopupPage(importPopupViewModel));
+            var output = await App.Current.MainPage.ShowPopupAsync(new ImportPopup(importPopupViewModel));
             if (output == null) return;
             foreach (DBLecture lecture in (List<DBLecture>)output)
             {
@@ -68,6 +68,13 @@ namespace Avatab.ViewModel
             this.Refresh();
         }
 
+        [RelayCommand]
+        public async void Edit(DBPerson person)
+        {
+            Dictionary<string, object> navigationParameter = new Dictionary<string, object>();
+            navigationParameter.Add("person", person);
+            await Shell.Current.GoToAsync(Routes.PersonEditPage, navigationParameter);
+        }
 
     }
 }
