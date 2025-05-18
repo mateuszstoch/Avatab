@@ -78,7 +78,7 @@ namespace Avatab.Services
             return output;
 
         }
-        public List<DBLecture> GetLectures(int parentId, DateTime date)
+        public List<DBLecture> GetLectureOnTime(int parentId, DateTime date)
         {
             List<DBLecture> output;
             string time = "";
@@ -86,6 +86,17 @@ namespace Avatab.Services
             using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
             {
                 SQLiteCommand cmd = con.CreateCommand("select * from DBLecture where parentId=? and timeStart < ? and timeEnd > ? and date=?", parentId, time, time, date.Date.Ticks);
+                output = cmd.ExecuteQuery<DBLecture>();
+                con.Close();
+            }
+            return output;
+        }
+        public List<DBLecture> GetLecturesOnDay(int parentId, DateTime date)
+        {
+            List<DBLecture> output;
+            using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
+            {
+                SQLiteCommand cmd = con.CreateCommand("select * from DBLecture where parentId=? and date=? order by timeStart", parentId, date.Date.Ticks);
                 output = cmd.ExecuteQuery<DBLecture>();
                 con.Close();
             }

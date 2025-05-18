@@ -1,0 +1,139 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Avatab.View.PersonEditPage"
+             xmlns:vm="clr-namespace:Avatab.ViewModel"
+             xmlns:model="clr-namespace:Avatab.Model"
+             x:DataType="vm:PersonEditViewModel"
+             BackgroundColor="#F5F5F5"
+            >
+
+    <Grid RowDefinitions="auto,auto,*" RowSpacing="20">
+
+        <!-- Header with Picture, Name, Edit and Add Buttons -->
+        <Grid ColumnDefinitions="Auto, *, Auto, Auto"
+              RowDefinitions="Auto"
+              VerticalOptions="Start"
+              Padding="10,20,10,10"
+              Grid.Row="0">
+
+            <!-- Circular Picture -->
+            <Frame Grid.Column="0"
+                   WidthRequest="64"
+                   HeightRequest="64"
+                   CornerRadius="32"
+                   BackgroundColor="#DDD"
+                   HasShadow="False"
+                   Padding="0"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center">
+                <Image Source="profile_placeholder.png"
+                       Aspect="AspectFill"
+                       WidthRequest="64"
+                       HeightRequest="64" />
+            </Frame>
+
+            <!-- Name Label -->
+            <Label Grid.Column="1"
+                   Text="{Binding Name}"
+                   FontSize="24"
+                   Margin="10,0,0,0"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start"
+                   FontAttributes="Bold"
+                   TextColor="#222" />
+
+            <!-- Edit Button -->
+            <ImageButton Grid.Column="2"
+                    Source="edit.png"
+                    BackgroundColor="Transparent"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    Padding="5"
+                    Margin="0,0,30,0"
+                    CornerRadius="50"
+                    BorderWidth="1"
+                    BorderColor="Grey"
+                    Command="{Binding EditCommand}" />
+
+            <!-- Add Button -->
+            <Button Grid.Column="3"
+                    Text="+"
+                    FontSize="20"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    CornerRadius="50"
+                    Padding="0"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    Command="{Binding AddEventCommand}" />
+        </Grid>
+
+        <!-- Date Label -->
+        <Label Text="{Binding Date}"
+               FontSize="18"
+               FontAttributes="Bold"
+               TextColor="#444"
+               HorizontalOptions="Center"
+               Grid.Row="1"/>
+
+        <!-- Calendar-like Event Area -->
+        <Frame BackgroundColor="White"
+               CornerRadius="12"
+               Padding="10"
+               HasShadow="True"
+               Grid.Row="2"
+               Margin="0,0,0,-10"
+               >
+
+            <CollectionView ItemsSource="{Binding Lectures}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:DBLecture">
+                        <Grid>
+                            <Frame
+                            CornerRadius="12"
+                            BorderColor="LightGray"
+                            Padding="10,5,10,5"
+                            Margin="5"
+                            HasShadow="True"
+                            BackgroundColor="White">
+
+                                <Grid RowSpacing="4" ColumnSpacing="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0"
+                                           Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           TextColor="Black"/>
+
+                                    <Label Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding timeStart}"
+                                           FontSize="14"
+                                           TextColor="DarkGray"
+                                           HorizontalTextAlignment="End"/>
+                                    <Label Grid.Row="1" Grid.Column="0"
+                                           Text="{Binding place}"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+
+                                    <Label Grid.Row="1" Grid.Column="1"
+                                           Text="{Binding profesor}"
+                                           FontSize="14"
+                                           TextColor="Gray"
+                                           HorizontalTextAlignment="End"/>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Frame>
+    </Grid>
+</ContentPage>

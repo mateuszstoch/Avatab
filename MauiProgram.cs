@@ -3,12 +3,14 @@ using Avatab.Services.Interfaces;
 using Avatab.View;
 using Avatab.ViewModel;
 using CommunityToolkit.Maui;
+using epj.RouteGenerator;
 using Microsoft.Extensions.Logging;
 
 
 
 namespace Avatab
 {
+    [AutoRoutes("Page")]
     public static class MauiProgram
     {
         public static MauiApp CreateMauiApp()
@@ -28,12 +30,15 @@ namespace Avatab
 #endif
             //pages
             builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<ImportPopupPage>();
+            builder.Services.AddSingleton<PersonEditPage>();
 
             //view models
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<ImportPopupViewModel>();
+            builder.Services.AddSingleton<PersonEditViewModel>();
 
+            //Popups
+            builder.Services.AddSingleton<ImportPopup>();
 
             //services
             builder.Services.AddSingleton<IDatabaseService, DatabaseService>();
