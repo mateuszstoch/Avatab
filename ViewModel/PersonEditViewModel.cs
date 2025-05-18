@@ -23,10 +23,11 @@ namespace Avatab.ViewModel
             {
                 if (Lectures[i].timeEnd != Lectures[i + 1].timeStart)
                 {
-                    Lectures.Add(new DBLecture { Name = "Wolne", timeStart = Lectures[i].timeEnd, timeEnd = Lectures[i + 1].timeStart, });
+                    Lectures.Add(new DBLecture { Name = "Avaliable", timeStart = Lectures[i].timeEnd, timeEnd = Lectures[i + 1].timeStart, });
                 }
             }
-            Lectures = Lectures.OrderBy(l => l.timeStart).ToList();
+            Lectures = Lectures.OrderBy(l => TimeSpan.Parse(l.timeStart)).ToList();
+
         }
 
         [ObservableProperty]
@@ -42,10 +43,7 @@ namespace Avatab.ViewModel
         private string date;
 
         [RelayCommand]
-        private void Edit()
-        {
-
-        }
+        private void Edit() { }
 
         [RelayCommand]
         private void AddEvent() { }

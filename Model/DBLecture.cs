@@ -27,6 +27,9 @@ namespace Avatab.Model
 
         }
 
+        [Ignore]
+        public string TimeRange => $"{timeStart} - {timeEnd}";
+
 
     }
 }
