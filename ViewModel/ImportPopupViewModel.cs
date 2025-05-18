@@ -10,6 +10,11 @@ namespace Avatab.ViewModel
         public ImportPopupViewModel(IDatabaseService _databaseService)
         {
             databaseService = _databaseService;
+            this.reset();
+        }
+
+        public void reset()
+        {
             Name = string.Empty;
             Lectures = new List<DBLecture>();
             ImportStatus = string.Empty;

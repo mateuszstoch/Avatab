@@ -44,14 +44,14 @@ namespace Avatab.ViewModel
                     person.isOccupied = false;
                 }
             }
+            DBPeople.Sort((a, b) => a.isOccupied.CompareTo(b.isOccupied));
             IsRefreshing = false;
-
         }
 
         [RelayCommand]
         public async void Import()
         {
-
+            importPopupViewModel.reset();
             var output = await App.Current.MainPage.ShowPopupAsync(new ImportPopupPage(importPopupViewModel));
             if (output == null) return;
             foreach (DBLecture lecture in (List<DBLecture>)output)

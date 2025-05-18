@@ -1,16 +1,80 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-             x:Class="Avatab.View.ImportPopupPage"
-           >
-    <VerticalStackLayout Padding="20" Spacing="10">
-        <Label Text="Name" FontAttributes="Bold" FontSize="20" />
-        <Entry Text="{Binding Name}"></Entry>
-        <Label Text="Import CSV" FontAttributes="Bold" FontSize="20" />
-        <Button Text="Pick CSV File" Command="{Binding PickFileCommand}" />
-        <Label Text="{Binding ImportStatus}" TextColor="Green" />
-        <Button Text="Close" Clicked="OnCloseClicked" />
-        <Button Text="Import" Clicked="OnImportClicked" />
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           xmlns:converters="clr-namespace:Avatab.Converters"
+           x:Class="Avatab.View.ImportPopupPage">
+
+    <mct:Popup.Resources>
+        <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter" />
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#1976D2" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Style.Triggers>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding Name}"
+                             Value="">
+                    <Setter Property="IsEnabled" Value="False" />
+                    <Setter Property="BackgroundColor" Value="#B0BEC5" />
+                    <Setter Property="TextColor" Value="#EEEEEE" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </mct:Popup.Resources>
+
+    <VerticalStackLayout Padding="24" Spacing="16"
+                         BackgroundColor="White"
+                         WidthRequest="320"
+                         HorizontalOptions="Center">
+
+        <!-- Title -->
+        <Label Text="Import Data"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               TextColor="#333" />
+
+        <!-- Name Input -->
+        <Label Text="Name"
+               FontSize="16"
+               FontAttributes="Bold"
+               TextColor="#555" />
+        <Entry Text="{Binding Name}"
+               Placeholder="Enter name"
+               BackgroundColor="#f5f5f5"
+               TextColor="Black"
+               HeightRequest="40" />
+
+        <!-- File Picker -->
+        <Label Text="Import CSV"
+               FontSize="16"
+               FontAttributes="Bold"
+               TextColor="#555" />
+        <Button Text="Pick CSV File"
+                Command="{Binding PickFileCommand}"
+                Style="{StaticResource ActionButtonStyle}" />
+
+        <!-- Status -->
+        <Label Text="{Binding ImportStatus}"
+               FontSize="14"
+               TextColor="Green"
+               IsVisible="{Binding ImportStatus, Converter={StaticResource StringNotEmptyConverter}}" />
+
+        <!-- Footer Buttons -->
+        <HorizontalStackLayout Spacing="12"
+                               HorizontalOptions="Center">
+            <Button Text="Close"
+                    Clicked="OnCloseClicked"
+                    BackgroundColor="#E0E0E0"
+                    TextColor="Black"
+                    WidthRequest="100"
+                    CornerRadius="8" />
+
+            <Button Text="Import"
+                    Clicked="OnImportClicked"
+                    Style="{StaticResource ActionButtonStyle}" />
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </mct:Popup>
