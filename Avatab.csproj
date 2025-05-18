@@ -10,6 +10,7 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<Authors>Mateusz Stoch</Authors>
 
 		<!-- Display name -->
 		<ApplicationTitle>Avatab</ApplicationTitle>
@@ -67,6 +68,10 @@
 	  <MauiXaml Update="View\PersonEditPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="assets\" />
 	</ItemGroup>
 
 </Project>
