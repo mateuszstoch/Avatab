@@ -42,19 +42,6 @@
                    FontAttributes="Bold"
                    TextColor="#222" />
 
-            <!-- Edit Button -->
-            <ImageButton Grid.Column="2"
-                    Source="edit.png"
-                    BackgroundColor="Transparent"
-                    WidthRequest="40"
-                    HeightRequest="40"
-                    Padding="5"
-                    Margin="0,0,30,0"
-                    CornerRadius="50"
-                    BorderWidth="1"
-                    BorderColor="Grey"
-                    Command="{Binding EditCommand}" />
-
             <!-- Add Button -->
             <Button Grid.Column="3"
                     Text="+"
@@ -120,7 +107,8 @@
                                     <Label Grid.Row="1" Grid.Column="0"
                                            Text="{Binding place}"
                                            FontSize="14"
-                                           TextColor="Gray"/>
+                                           TextColor="Gray"
+                                           />
 
                                     <Label Grid.Row="1" Grid.Column="1"
                                            Text="{Binding profesor}"

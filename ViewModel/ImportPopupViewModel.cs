@@ -56,14 +56,17 @@ namespace Avatab.ViewModel
                     if (parts.Length < 10) continue;
                     char lectureType = parts[4].Trim()[0];
                     var dateStructure = parts[7].Split("-");
+                    var timeStart = parts[8].Split(":");
+                    var timeEnd = parts[9].Split(":");
+                    DateOnly date = new DateOnly(int.Parse(dateStructure[0]), int.Parse(dateStructure[1]), int.Parse(dateStructure[2]));
                     Lectures.Add(new DBLecture
                     {
                         Name = parts[3].Trim(),
                         profesor = parts[6],
                         lectureType = lectureType == 'w' ? LectureType.wyklad : lectureType == 'ć' ? LectureType.cwiczenia : LectureType.lektorat,
-                        timeStart = parts[8].Trim(),
-                        timeEnd = parts[9].Trim(),
-                        date = new DateTime(int.Parse(dateStructure[0]), int.Parse(dateStructure[1]), int.Parse(dateStructure[2])),
+                        timeStart = new DateTime(date, new TimeOnly(int.Parse(timeStart[0]), int.Parse(timeStart[1]), 0)),
+                        timeEnd = new DateTime(date, new TimeOnly(int.Parse(timeEnd[0]), int.Parse(timeEnd[1]), 0)),
+                        date = new DateTime(date, new TimeOnly(0, 0, 0)),
                         place = parts[10].Trim() + ' ' + parts[11].Trim(),
                         parentId = person.Id
                     });

@@ -81,11 +81,9 @@ namespace Avatab.Services
         public List<DBLecture> GetLectureOnTime(int parentId, DateTime date)
         {
             List<DBLecture> output;
-            string time = "";
-            time = date.Hour + ":" + date.Minute + ":" + date.Second;
             using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
             {
-                SQLiteCommand cmd = con.CreateCommand("select * from DBLecture where parentId=? and timeStart < ? and timeEnd > ? and date=?", parentId, time, time, date.Date.Ticks);
+                SQLiteCommand cmd = con.CreateCommand("SELECT * FROM DBLecture WHERE parentId=? AND ? BETWEEN timeStart AND timeEnd", parentId, date);
                 output = cmd.ExecuteQuery<DBLecture>();
                 con.Close();
             }
