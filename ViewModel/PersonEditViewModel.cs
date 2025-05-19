@@ -21,12 +21,12 @@ namespace Avatab.ViewModel
             int lectureCount = Lectures.Count;
             for (int i = 0; i < lectureCount - 1; i++)
             {
-                if (Lectures[i].timeEnd != Lectures[i + 1].timeStart)
+                if (!DateTime.Equals(Lectures[i].timeEnd, Lectures[i + 1].timeStart))
                 {
                     Lectures.Add(new DBLecture { Name = "Avaliable", timeStart = Lectures[i].timeEnd, timeEnd = Lectures[i + 1].timeStart, });
                 }
             }
-            Lectures = Lectures.OrderBy(l => TimeSpan.Parse(l.timeStart)).ToList();
+            Lectures = Lectures.OrderBy(l => l.timeStart.ToString("HH:mm")).ToList();
 
         }
 
