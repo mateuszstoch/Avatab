@@ -16,8 +16,8 @@ namespace Avatab.Model
         public string Name { get; set; }
         public string profesor { get; set; }
         public LectureType lectureType { get; set; }
-        public DateTime timeStart { get; set; }
-        public DateTime timeEnd { get; set; }
+        public TimeSpan timeStart { get; set; }
+        public TimeSpan timeEnd { get; set; }
         public DateTime date { get; set; }
         public string place { get; set; }
         public long parentId { get; set; }
@@ -28,7 +28,7 @@ namespace Avatab.Model
         }
 
         [Ignore]
-        public string TimeRange => $"{timeStart.ToString("HH:mm")} - {timeEnd.ToString("HH:mm")}";
+        public string TimeRange => $"{timeStart.ToString(@"hh\:mm")} - {timeEnd.ToString(@"hh\:mm")}";
 
 
     }
