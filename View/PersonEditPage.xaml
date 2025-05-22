@@ -52,7 +52,9 @@
                     Padding="0"
                     BackgroundColor="#4CAF50"
                     TextColor="White"
-                    Command="{Binding AddEventCommand}" />
+                    Command="{Binding AddEventCommand}" >
+                
+            </Button>
         </Grid>
 
         <!-- Date Label -->
@@ -69,7 +71,7 @@
                Padding="10"
                HasShadow="True"
                Grid.Row="2"
-               Margin="0,0,0,-10"
+               Margin="0,0,0,-7"
                >
 
             <CollectionView ItemsSource="{Binding Lectures}">

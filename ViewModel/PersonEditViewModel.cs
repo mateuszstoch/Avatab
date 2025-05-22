@@ -18,16 +18,31 @@ namespace Avatab.ViewModel
             Name = Person!.name;
             Date = DateTime.Now.ToString().Split(" ")[0];
             Lectures = databaseService.GetLecturesOnDay(Person.Id, DateTime.Now);
-            int lectureCount = Lectures.Count;
-            for (int i = 0; i < lectureCount - 1; i++)
+            if (Lectures.Count == 0)
             {
-                if (!DateTime.Equals(Lectures[i].timeEnd, Lectures[i + 1].timeStart))
+                Lectures.Insert(0, new DBLecture { Name = "Avaliable", timeStart = new TimeSpan(8, 0, 0), timeEnd = new TimeSpan(20, 0, 0), });
+            }
+            else
+            {
+
+                if (Lectures[0].timeStart != new TimeSpan(8, 0, 0))
                 {
-                    Lectures.Add(new DBLecture { Name = "Avaliable", timeStart = Lectures[i].timeEnd, timeEnd = Lectures[i + 1].timeStart, });
+                    Lectures.Insert(0, new DBLecture { Name = "Avaliable", timeStart = new TimeSpan(8, 0, 0), timeEnd = Lectures[0].timeStart, });
+                }
+                int lectureCount = Lectures.Count;
+                for (int i = 0; i < lectureCount - 1; i++)
+                {
+                    if (!DateTime.Equals(Lectures[i].timeEnd, Lectures[i + 1].timeStart))
+                    {
+                        Lectures.Add(new DBLecture { Name = "Avaliable", timeStart = Lectures[i].timeEnd, timeEnd = Lectures[i + 1].timeStart, });
+                    }
+                }
+                Lectures = Lectures.OrderBy(l => l.timeStart.ToString(@"hh\:mm")).ToList();
+                if (Lectures[Lectures.Count - 1].timeEnd != new TimeSpan(20, 0, 0))
+                {
+                    Lectures.Add(new DBLecture { Name = "Avaliable", timeStart = Lectures[Lectures.Count - 1].timeEnd, timeEnd = new TimeSpan(20, 0, 0), });
                 }
             }
-            Lectures = Lectures.OrderBy(l => l.timeStart.ToString("HH:mm")).ToList();
-
         }
 
         [ObservableProperty]

@@ -7,6 +7,7 @@
 
     <mct:Popup.Resources>
         <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter" />
+        <converters:BoolToStringConverter x:Key="BoolToStringConverter" />
         <Style x:Key="ActionButtonStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="#1976D2" />
             <Setter Property="TextColor" Value="White" />
@@ -24,7 +25,7 @@
         </Style>
     </mct:Popup.Resources>
 
-    <VerticalStackLayout Padding="24" Spacing="16"
+    <VerticalStackLayout Padding="24" Spacing="10"
                          BackgroundColor="White"
                          WidthRequest="320"
                          HorizontalOptions="Center">
@@ -48,10 +49,15 @@
                HeightRequest="40" />
 
         <!-- File Picker -->
-        <Label Text="Import CSV"
-               FontSize="16"
-               FontAttributes="Bold"
-               TextColor="#555" />
+        <Grid ColumnDefinitions="Auto,*">
+            <Label Text="{Binding IsImportFromUsosTogled, Converter={StaticResource BoolToStringConverter}}"
+                Grid.Column="0"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="#555" 
+                   VerticalTextAlignment="Center"/>
+            <Switch IsToggled="{Binding IsImportFromUsosTogled}" Grid.Column="1"/>
+        </Grid>
         <Button Text="Pick CSV File"
                 Command="{Binding PickFileCommand}"
                 Style="{StaticResource ActionButtonStyle}" />
