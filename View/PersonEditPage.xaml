@@ -1,5 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Avatab.View.PersonEditPage"
              xmlns:vm="clr-namespace:Avatab.ViewModel"
              xmlns:model="clr-namespace:Avatab.Model"
@@ -65,12 +66,20 @@
         </Grid>
 
         <!-- Date Label -->
-        <Label Text="{Binding Date}"
-               FontSize="18"
-               FontAttributes="Bold"
-               TextColor="#444"
-               HorizontalOptions="Center"
-               Grid.Row="1"/>
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto,*">
+            <Button Text="&lt;" FontSize="Large" Command="{Binding ChangeDateCommand}" CommandParameter="-1" Grid.Column="0" BackgroundColor="Transparent" TextColor="Black"/>
+            <DatePicker 
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#444"
+                   HorizontalOptions="Center"
+                   Grid.Column="1"
+                    Date="{Binding Date}"
+                    />
+            <Button Text=">" FontSize="Large" Command="{Binding ChangeDateCommand}" CommandParameter="1" Grid.Column="2" BackgroundColor="Transparent" TextColor="Black"/>
+        </Grid>
+
+
 
         <!-- Calendar-like Event Area -->
         <Frame BackgroundColor="White"
@@ -80,70 +89,71 @@
                Grid.Row="2"
                Margin="0,0,0,-7"
                >
+            <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+                <CollectionView ItemsSource="{Binding Lectures}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:DBLecture">
+                            <Grid>
+                                <SwipeView IsEnabled="{Binding Id,Converter={StaticResource IntToBoolConverter}}">
+                                    <SwipeView.LeftItems >
+                                        <SwipeItems Mode="Execute">
+                                            <SwipeItem Text="Delete"
+                                                       IconImageSource="delete.png"
+                                                       BackgroundColor="#F44336"
+                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PersonEditViewModel}}, Path=DeleteCommand}"
+                                                       CommandParameter="{Binding .}" />
+                                        </SwipeItems>
+                                    </SwipeView.LeftItems>
+                                    <Frame
+                                    CornerRadius="12"
+                                    BorderColor="{Binding isPending , Converter={StaticResource BoolToColorPendingConverter}}"
+                                    Padding="10,5,10,5"
+                                    Margin="5"
+                                    HasShadow="True"
+                                    BackgroundColor="White">
 
-            <CollectionView ItemsSource="{Binding Lectures}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:DBLecture">
-                        <Grid>
-                            <SwipeView IsEnabled="{Binding Id,Converter={StaticResource IntToBoolConverter}}">
-                                <SwipeView.LeftItems>
-                                    <SwipeItems Mode="Execute">
-                                        <SwipeItem Text="Delete"
-                                                   IconImageSource="delete.png"
-                                                   BackgroundColor="#F44336"
-                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PersonEditViewModel}}, Path=DeleteCommand}"
-                                                   CommandParameter="{Binding .}" />
-                                    </SwipeItems>
-                                </SwipeView.LeftItems>
-                                <Frame
-                                CornerRadius="12"
-                                BorderColor="{Binding isPending , Converter={StaticResource BoolToColorPendingConverter}}"
-                                Padding="10,5,10,5"
-                                Margin="5"
-                                HasShadow="True"
-                                BackgroundColor="White">
+                                        <Grid RowSpacing="4" ColumnSpacing="10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                                    <Grid RowSpacing="4" ColumnSpacing="10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                                            <Label Grid.Row="0" Grid.Column="0"
+                                                   Text="{Binding Name}"
+                                                   FontAttributes="Bold"
+                                                   FontSize="16"
+                                                   TextColor="Black"/>
+                                            <Label Grid.Row="0" Grid.Column="1"
+                                                   Text="{Binding TimeRange}"
+                                                   FontSize="14"
+                                                   TextColor="DarkGray"
+                                                   HorizontalTextAlignment="End"/>
 
-                                        <Label Grid.Row="0" Grid.Column="0"
-                                               Text="{Binding Name}"
-                                               FontAttributes="Bold"
-                                               FontSize="16"
-                                               TextColor="Black"/>
-                                        <Label Grid.Row="0" Grid.Column="1"
-                                               Text="{Binding TimeRange}"
-                                               FontSize="14"
-                                               TextColor="DarkGray"
-                                               HorizontalTextAlignment="End"/>
-
-                                        <Label Grid.Row="1" Grid.Column="0"
-                                               Text="{Binding place}"
-                                               FontSize="14"
-                                               TextColor="Gray"
+                                            <Label Grid.Row="1" Grid.Column="0"
+                                                   Text="{Binding place}"
+                                                   FontSize="14"
+                                                   TextColor="Gray"
                                            
                                    
-                                        />
-                                        <Label Grid.Row="1" Grid.Column="1"
-                                               Text="{Binding profesor}"
-                                               FontSize="14"
-                                               TextColor="Gray"
-                                               HorizontalTextAlignment="End"
-                                        />
-                                    </Grid>
-                                </Frame>
-                            </SwipeView>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                            />
+                                            <Label Grid.Row="1" Grid.Column="1"
+                                                   Text="{Binding profesor}"
+                                                   FontSize="14"
+                                                   TextColor="Gray"
+                                                   HorizontalTextAlignment="End"
+                                            />
+                                        </Grid>
+                                    </Frame>
+                                </SwipeView>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
 
         </Frame>
     </Grid>

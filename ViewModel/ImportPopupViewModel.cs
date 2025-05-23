@@ -104,7 +104,30 @@ namespace Avatab.ViewModel
 
         private async Task ImportFromCvs(StreamReader reader)
         {
-            throw new NotImplementedException();
+            int lineIndex = 0;
+            while (!reader.EndOfStream)
+            {
+                var line = await reader.ReadLineAsync();
+                lineIndex++;
+                if (lineIndex <= 1) continue;
+
+                var parts = line.Split(';');
+                if (parts.Length < 6) continue;
+                var dateStructure = parts[2].Split("-");
+                var timeStart = parts[3].Split(":");
+                var timeEnd = parts[4].Split(":");
+                DateTime date = new DateTime(int.Parse(dateStructure[0]), int.Parse(dateStructure[1]), int.Parse(dateStructure[2]));
+                Lectures.Add(new DBLecture
+                {
+                    Name = parts[0].Trim(),
+                    profesor = parts[1],
+                    timeStart = new TimeSpan(int.Parse(timeStart[0]), int.Parse(timeStart[1]), 0),
+                    timeEnd = new TimeSpan(int.Parse(timeEnd[0]), int.Parse(timeEnd[1]), 0),
+                    date = date,
+                    place = parts[5].Trim(),
+                    parentId = person.Id
+                });
+            }
         }
 
     }
