@@ -62,7 +62,7 @@
                             </SwipeView.LeftItems>
 
                             <Frame Padding="12"
-                                   Margin="0,4"
+                                   Margin="4"
                                    BackgroundColor="White"
                                    CornerRadius="12"
                                    HasShadow="True"
