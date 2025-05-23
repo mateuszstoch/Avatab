@@ -10,7 +10,7 @@
              >
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:BoolToColorOccupiedConverter x:Key="BoolToColorOccupiedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -52,7 +52,8 @@
                         <SwipeView>
                             <SwipeView.LeftItems>
                                 <SwipeItems Mode="Execute">
-                                    <SwipeItem Text="Delete"
+                                    <SwipeItem
+                                               
                                                IconImageSource="delete.png"
                                                BackgroundColor="#F44336"
                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
@@ -65,7 +66,7 @@
                                    BackgroundColor="White"
                                    CornerRadius="12"
                                    HasShadow="True"
-                                   BorderColor="{Binding isOccupied, Converter={StaticResource BoolToColorConverter}}"
+                                   BorderColor="{Binding isOccupied, Converter={StaticResource BoolToColorOccupiedConverter}}"
                                    >
                                 <Grid ColumnDefinitions="auto, *">
                                     <Label Text="{Binding name}"

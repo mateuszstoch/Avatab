@@ -39,10 +39,6 @@ namespace Avatab.ViewModel
                 {
                     person.isOccupied = true;
                 }
-                else
-                {
-                    person.isOccupied = false;
-                }
             }
             DBPeople.Sort((a, b) => a.isOccupied.CompareTo(b.isOccupied));
             IsRefreshing = false;

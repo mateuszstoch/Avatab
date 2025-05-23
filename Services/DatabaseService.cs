@@ -43,7 +43,11 @@ namespace Avatab.Services
 
         public void DeleteLecture(int lectureId)
         {
-            throw new NotImplementedException();
+            using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
+            {
+                con.Delete<DBLecture>(lectureId);
+                con.Close();
+            }
         }
 
         public void DeletePerson(long id)
@@ -83,7 +87,7 @@ namespace Avatab.Services
             List<DBLecture> output;
             using (SQLiteConnection con = new SQLiteConnection(DatabaseConstants.DatabasePath, DatabaseConstants.Flags))
             {
-                SQLiteCommand cmd = con.CreateCommand("SELECT * FROM DBLecture WHERE parentId=? AND ? BETWEEN timeStart AND timeEnd", parentId, date);
+                SQLiteCommand cmd = con.CreateCommand("SELECT * FROM DBLecture WHERE parentId=? AND ? BETWEEN timeStart AND timeEnd AND date=?", parentId, date.TimeOfDay, date.Date);
                 output = cmd.ExecuteQuery<DBLecture>();
                 con.Close();
             }

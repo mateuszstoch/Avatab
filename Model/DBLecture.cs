@@ -12,7 +12,7 @@ namespace Avatab.Model
     public class DBLecture
     {
         [AutoIncrement, PrimaryKey]
-        private int Id { get; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string profesor { get; set; }
         public LectureType lectureType { get; set; }
@@ -24,12 +24,15 @@ namespace Avatab.Model
 
         public DBLecture()
         {
-
+            isPending = false;
         }
+
 
         [Ignore]
         public string TimeRange => $"{timeStart.ToString(@"hh\:mm")} - {timeEnd.ToString(@"hh\:mm")}";
 
+        [Ignore]
+        public bool isPending { get; set; }
 
     }
 }

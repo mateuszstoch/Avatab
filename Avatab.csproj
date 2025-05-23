@@ -75,7 +75,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="assets\" />
+	  <Folder Include="Assets\" />
 	</ItemGroup>
 
 </Project>
