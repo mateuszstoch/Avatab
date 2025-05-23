@@ -3,9 +3,16 @@
              x:Class="Avatab.View.PersonEditPage"
              xmlns:vm="clr-namespace:Avatab.ViewModel"
              xmlns:model="clr-namespace:Avatab.Model"
+             xmlns:converters="clr-namespace:Avatab.Converters"
              x:DataType="vm:PersonEditViewModel"
              BackgroundColor="#F5F5F5"
             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToColorPendingConverter x:Key="BoolToColorPendingConverter" />
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="auto,auto,*" RowSpacing="20">
 
@@ -78,47 +85,61 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:DBLecture">
                         <Grid>
-                            <Frame
-                            CornerRadius="12"
-                            BorderColor="LightGray"
-                            Padding="10,5,10,5"
-                            Margin="5"
-                            HasShadow="True"
-                            BackgroundColor="White">
+                            <SwipeView IsEnabled="{Binding Id,Converter={StaticResource IntToBoolConverter}}">
+                                <SwipeView.LeftItems>
+                                    <SwipeItems Mode="Execute">
+                                        <SwipeItem Text="Delete"
+                                                   IconImageSource="delete.png"
+                                                   BackgroundColor="#F44336"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PersonEditViewModel}}, Path=DeleteCommand}"
+                                                   CommandParameter="{Binding .}" />
+                                    </SwipeItems>
+                                </SwipeView.LeftItems>
+                                <Frame
+                                CornerRadius="12"
+                                BorderColor="{Binding isPending , Converter={StaticResource BoolToColorPendingConverter}}"
+                                Padding="10,5,10,5"
+                                Margin="5"
+                                HasShadow="True"
+                                BackgroundColor="White">
 
-                                <Grid RowSpacing="4" ColumnSpacing="10">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Row="0" Grid.Column="0"
-                                           Text="{Binding Name}"
-                                           FontAttributes="Bold"
-                                           FontSize="16"
-                                           TextColor="Black"/>
+                                    <Grid RowSpacing="4" ColumnSpacing="10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <Label Grid.Row="0" Grid.Column="1"
-                                           Text="{Binding TimeRange}"
-                                           FontSize="14"
-                                           TextColor="DarkGray"
-                                           HorizontalTextAlignment="End"/>
-                                    <Label Grid.Row="1" Grid.Column="0"
-                                           Text="{Binding place}"
-                                           FontSize="14"
-                                           TextColor="Gray"
-                                           />
+                                        <Label Grid.Row="0" Grid.Column="0"
+                                               Text="{Binding Name}"
+                                               FontAttributes="Bold"
+                                               FontSize="16"
+                                               TextColor="Black"/>
+                                        <Label Grid.Row="0" Grid.Column="1"
+                                               Text="{Binding TimeRange}"
+                                               FontSize="14"
+                                               TextColor="DarkGray"
+                                               HorizontalTextAlignment="End"/>
 
-                                    <Label Grid.Row="1" Grid.Column="1"
-                                           Text="{Binding profesor}"
-                                           FontSize="14"
-                                           TextColor="Gray"
-                                           HorizontalTextAlignment="End"/>
-                                </Grid>
-                            </Frame>
+                                        <Label Grid.Row="1" Grid.Column="0"
+                                               Text="{Binding place}"
+                                               FontSize="14"
+                                               TextColor="Gray"
+                                           
+                                   
+                                        />
+                                        <Label Grid.Row="1" Grid.Column="1"
+                                               Text="{Binding profesor}"
+                                               FontSize="14"
+                                               TextColor="Gray"
+                                               HorizontalTextAlignment="End"
+                                        />
+                                    </Grid>
+                                </Frame>
+                            </SwipeView>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

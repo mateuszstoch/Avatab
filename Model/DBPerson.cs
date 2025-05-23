@@ -7,9 +7,14 @@ namespace Avatab.Model
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string name { get; set; }
+
+        [Ignore]
         public bool isOccupied { get; set; }
 
 
-        public DBPerson() { }
+        public DBPerson()
+        {
+            isOccupied = false;
+        }
     }
 }
