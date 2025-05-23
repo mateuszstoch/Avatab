@@ -94,9 +94,9 @@ namespace Avatab.ViewModel
             Date = Date.AddDays(int.Parse(i));
         }
 
-        partial void OnDateChanged(DateTime newValue)
+        partial void OnDateChanged(DateTime oldValue, DateTime newValue)
         {
-            if (Person is not null)
+            if (Person is not null && newValue != oldValue)
                 this.Refresh();
         }
 

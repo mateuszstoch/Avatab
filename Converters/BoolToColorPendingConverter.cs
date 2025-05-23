@@ -6,7 +6,7 @@ namespace Avatab.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? Colors.Blue : Colors.LightGray;
+            return (bool)value ? SolidColorBrush.Blue : SolidColorBrush.LightGray;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

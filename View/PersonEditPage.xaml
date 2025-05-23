@@ -25,12 +25,11 @@
               Grid.Row="0">
 
             <!-- Circular Picture -->
-            <Frame Grid.Column="0"
+            <Border Grid.Column="0"
                    WidthRequest="64"
                    HeightRequest="64"
-                   CornerRadius="32"
+                   StrokeShape="Ellipse"
                    BackgroundColor="#DDD"
-                   HasShadow="False"
                    Padding="0"
                    HorizontalOptions="Start"
                    VerticalOptions="Center">
@@ -38,7 +37,7 @@
                        Aspect="AspectFill"
                        WidthRequest="64"
                        HeightRequest="64" />
-            </Frame>
+            </Border>
 
             <!-- Name Label -->
             <Label Grid.Column="1"
@@ -82,10 +81,9 @@
 
 
         <!-- Calendar-like Event Area -->
-        <Frame BackgroundColor="White"
-               CornerRadius="12"
+        <Border BackgroundColor="White"
+               StrokeShape="RoundRectangle 20"
                Padding="10"
-               HasShadow="True"
                Grid.Row="2"
                Margin="0,0,0,-7"
                >
@@ -97,19 +95,20 @@
                                 <SwipeView IsEnabled="{Binding Id,Converter={StaticResource IntToBoolConverter}}">
                                     <SwipeView.LeftItems >
                                         <SwipeItems Mode="Execute">
-                                            <SwipeItem Text="Delete"
-                                                       IconImageSource="delete.png"
-                                                       BackgroundColor="#F44336"
+                                            <SwipeItemView 
                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PersonEditViewModel}}, Path=DeleteCommand}"
-                                                       CommandParameter="{Binding .}" />
+                                                       CommandParameter="{Binding .}" >
+                                                <Border BackgroundColor="Red" StrokeShape="RoundRectangle 12" WidthRequest="300">
+                                                    <Image Source="delete.png" HorizontalOptions="Start" VerticalOptions="Center" Margin="5"/>
+                                                </Border>
+                                            </SwipeItemView>
                                         </SwipeItems>
                                     </SwipeView.LeftItems>
-                                    <Frame
-                                    CornerRadius="12"
-                                    BorderColor="{Binding isPending , Converter={StaticResource BoolToColorPendingConverter}}"
+                                    <Border
+                                    StrokeShape="RoundRectangle 12"
+                                    Stroke="{Binding isPending , Converter={StaticResource BoolToColorPendingConverter}}"
                                     Padding="10,5,10,5"
                                     Margin="5"
-                                    HasShadow="True"
                                     BackgroundColor="White">
 
                                         <Grid RowSpacing="4" ColumnSpacing="10">
@@ -147,7 +146,7 @@
                                                    HorizontalTextAlignment="End"
                                             />
                                         </Grid>
-                                    </Frame>
+                                    </Border>
                                 </SwipeView>
                             </Grid>
                         </DataTemplate>
@@ -155,6 +154,6 @@
                 </CollectionView>
             </RefreshView>
 
-        </Frame>
+        </Border>
     </Grid>
 </ContentPage>
