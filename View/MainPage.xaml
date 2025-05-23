@@ -51,22 +51,22 @@
                     <DataTemplate x:DataType="model:DBPerson">
                         <SwipeView>
                             <SwipeView.LeftItems>
-                                <SwipeItems Mode="Execute">
-                                    <SwipeItem
-                                               
-                                               IconImageSource="delete.png"
-                                               BackgroundColor="#F44336"
+                                <SwipeItems Mode="Execute" >
+                                    <SwipeItemView 
                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
-                                               CommandParameter="{Binding .}" />
+                                               CommandParameter="{Binding .}" >
+                                        <Border BackgroundColor="Red" StrokeShape="RoundRectangle 12" WidthRequest="300">
+                                            <Image Source="delete.png" HorizontalOptions="Start" VerticalOptions="Center" Margin="5"/>
+                                        </Border>
+                                    </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.LeftItems>
 
-                            <Frame Padding="12"
-                                   Margin="4"
+                            <Border Padding="12"
+                                   Margin="8,4"
                                    BackgroundColor="White"
-                                   CornerRadius="12"
-                                   HasShadow="True"
-                                   BorderColor="{Binding isOccupied, Converter={StaticResource BoolToColorOccupiedConverter}}"
+                                   StrokeShape="RoundRectangle 20"
+                                   Stroke="{Binding isOccupied, Converter={StaticResource BoolToColorOccupiedConverter}}"
                                    >
                                 <Grid ColumnDefinitions="auto, *">
                                     <Label Text="{Binding name}"
@@ -88,7 +88,7 @@
                                         VerticalOptions="Center"
                                         HorizontalOptions="End"/>
                                 </Grid>
-                            </Frame>
+                            </Border>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
