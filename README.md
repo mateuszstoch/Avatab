@@ -21,7 +21,9 @@ Planned features include:
 
 Contributions are welcome! Feel free to open issues for bugs or feature suggestions
 
+### 📱  Availability
+
+For now the app is only avaliable for android, as a student, I don't have spare money to play 100€ for Apple developer account annually. If enought people will request the ios version I will consider it.
 
 For **questions**, **collaborations**, or **commercial inquiries**, please reach out at:
-
 📬 [mateusz.stoch75@gmail.com](mailto:mateusz.stoch75@gmail.com)
