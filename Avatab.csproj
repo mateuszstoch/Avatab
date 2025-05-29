@@ -1,4 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<CodesignKey>Apple Distribution: Mateusz Stoch</CodesignKey>
+		<CodesignProvision>Avatab</CodesignProvision>
+	</PropertyGroup>
 
 	<PropertyGroup>
 		<TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
