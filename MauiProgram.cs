@@ -36,6 +36,7 @@ namespace Avatab
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<ImportPopupViewModel>();
             builder.Services.AddSingleton<PersonEditViewModel>();
+            builder.Services.AddSingleton<CalendarViewModel>();
 
             //Popups
             builder.Services.AddSingleton<ImportPopup>();

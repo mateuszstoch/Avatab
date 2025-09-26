@@ -26,7 +26,8 @@ namespace Avatab.Model
         {
             isPending = false;
         }
-
+        [Ignore]
+        public int duration => (timeEnd.Hours - timeStart.Hours) * 60 + Math.Abs(timeEnd.Minutes - timeStart.Minutes);
 
         [Ignore]
         public string TimeRange => $"{timeStart.ToString(@"hh\:mm")} - {timeEnd.ToString(@"hh\:mm")}";

@@ -2,6 +2,7 @@ using Avatab.Model;
 using Avatab.ViewModel;
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui.Layouts;
+using System.Collections.ObjectModel;
 
 
 namespace Avatab.View;
@@ -26,6 +27,8 @@ public partial class Calendar : ContentView
                 new ColumnDefinition { Width = GridLength.Star }
             }
         };
+
+
 
         _hoursCollection = new CollectionView
         {
@@ -56,8 +59,14 @@ public partial class Calendar : ContentView
         grid.Add(_lineLaypout);
         Grid.SetColumnSpan(_lineLaypout, 2);
 
+        _lineLaypout = new AbsoluteLayout { BackgroundColor = Colors.Transparent };
+        grid.Add(_lineLaypout);
+        Grid.SetColumnSpan(_lineLaypout, 2);
+
         scrollView.Content = grid;
         Content = scrollView;
+
+
 
         this.SizeChanged += (_, _) =>
         {
@@ -67,9 +76,12 @@ public partial class Calendar : ContentView
                 RenderEvents(vm.Events);
             }
         };
+
     }
 
-    private void RenderEvents(System.Collections.ObjectModel.ObservableCollection<CalendarEvent> events)
+
+
+    private void RenderEvents(ObservableCollection<CalendarEvent> events)
     {
         _eventLayout.Children.Clear();
         double hourHeight = _eventLayout.Height / 96;
@@ -104,7 +116,7 @@ public partial class Calendar : ContentView
         {
             var border = new Border
             {
-                BackgroundColor = Color.FromRgba(255, 0, 255, 0.6),
+                BackgroundColor = Color.FromRgba(255, 0, 255, 0.3),
                 StrokeShape = new RoundRectangle { CornerRadius = 8 },
                 Padding = 5,
                 Content = new Label
@@ -113,7 +125,7 @@ public partial class Calendar : ContentView
                     TextColor = Colors.White
 
                 },
-                Stroke = Colors.Transparent
+                Stroke = Color.FromRgba(255, 0, 255, 1)
 
             };
 
@@ -123,9 +135,9 @@ public partial class Calendar : ContentView
         }
     }
 
-    private System.Collections.ObjectModel.ObservableCollection<string> GenerateHours()
+    private ObservableCollection<string> GenerateHours()
     {
-        var hours = new System.Collections.ObjectModel.ObservableCollection<string>();
+        var hours = new ObservableCollection<string>();
         for (int i = 0; i < 24; i++)
             hours.Add($"{i:00}:00");
         return hours;

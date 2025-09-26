@@ -4,13 +4,11 @@ namespace Avatab
 {
     public partial class MainPage : ContentPage
     {
-        private CalendarViewModel _vm;
-        public MainPage(MainViewModel vm)
+        public MainPage(MainViewModel vm, CalendarViewModel cvm)
         {
             InitializeComponent();
             BindingContext = vm;
-            _vm = new CalendarViewModel();
-            MyCalendar.BindingContext = _vm;
+            MyCalendar.BindingContext = cvm;
         }
 
     }

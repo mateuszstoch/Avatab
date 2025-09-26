@@ -10,7 +10,34 @@
              BackgroundColor="#F5F5F5"
              >
     <VerticalStackLayout Spacing="10">
-        <Label Text="Moja aplikacja z kalendarzem" FontSize="24" HorizontalOptions="Center" />
+        <Grid ColumnDefinitions="*,auto,auto" ColumnSpacing="10">
+             <Button
+                 Margin="10"
+                 Text="+"
+                 FontSize="20"
+                 WidthRequest="40"
+                 HeightRequest="40"
+                 CornerRadius="50"
+                 Padding="0"
+                 BackgroundColor="#4CAF50"
+                 TextColor="White"
+                 Command="{Binding AddEventCommand}" 
+                 Grid.Column="1">
+
+            </Button>
+            <ImageButton 
+                 Margin="10"
+                 Source="settings.png"
+                 WidthRequest="40"
+                 HeightRequest="40"
+                 CornerRadius="50"
+                 Padding="0"
+                 BackgroundColor="Transparent"
+                 Command="{Binding SettingsCommand}" 
+                Grid.Column="2">
+
+            </ImageButton>
+        </Grid>
 
    
         <v:Calendar x:Name="MyCalendar"
