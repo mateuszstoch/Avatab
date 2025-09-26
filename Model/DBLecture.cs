@@ -34,5 +34,8 @@ namespace Avatab.Model
         [Ignore]
         public bool isPending { get; set; }
 
+        [Ignore]
+        public bool isLecture { get; set; }
+
     }
 }

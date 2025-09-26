@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Avatab.View.PersonListPage"
+             xmlns:converters="clr-namespace:Avatab.Converters"
+             xmlns:vm="clr-namespace:Avatab.ViewModel"
+             xmlns:model="clr-namespace:Avatab.Model"
+             x:DataType="vm:PersonListViewModel"
+             Title="PersonListPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToColorOccupiedConverter x:Key="BoolToColorOccupiedConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Floating Action Button -->
+        <Grid Grid.Row="0" Padding="16" >
+            <Label Text="Availability"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="#333"
+                VerticalOptions="Center"
+                HorizontalOptions="Start" />
+            <Button
+             Text="+"
+             Command="{Binding ImportCommand}"
+             BackgroundColor="White"
+             TextColor="Black"
+             BorderColor="DarkGray"
+             BorderWidth="1"
+             CornerRadius="25"
+             WidthRequest="50"
+             HeightRequest="50"
+             FontSize="28"
+             Padding="0"
+             HorizontalOptions="End"
+             VerticalOptions="Start"
+             />
+        </Grid>
+
+        <!-- RefreshView and CollectionView -->
+        <RefreshView Grid.Row="1"
+                  Command="{Binding RefreshCommand}"
+                  IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView ItemsSource="{Binding DBPeople}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:DBPerson">
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItemView 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
+                                            CommandParameter="{Binding .}" >
+                                        <Border BackgroundColor="Red" StrokeShape="RoundRectangle 12" WidthRequest="300">
+                                            <Image Source="delete.png" HorizontalOptions="Start" VerticalOptions="Center" Margin="5"/>
+                                        </Border>
+                                    </SwipeItemView>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+
+                            <Border Padding="12"
+                                Margin="8,4"
+                                BackgroundColor="White"
+                                StrokeShape="RoundRectangle 20"
+                                Stroke="{Binding isOccupied, Converter={StaticResource BoolToColorOccupiedConverter}}"
+                                >
+                                <Grid ColumnDefinitions="auto, *">
+                                    <Label Text="{Binding name}"
+                                        FontSize="18"
+                                        TextColor="#222" 
+                                        Grid.Column="0"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start"
+                                        />
+                                    <ImageButton 
+                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=EditCommand }" 
+                                     CommandParameter="{Binding .}" 
+                                     BackgroundColor="Transparent"
+                                     Source="edit.png"
+                                     Margin="10,0"
+                                     Grid.Column="1"
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="End"/>
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

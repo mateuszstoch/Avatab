@@ -2,6 +2,7 @@
 using Avatab.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 
 namespace Avatab.ViewModel
 {
@@ -10,8 +11,10 @@ namespace Avatab.ViewModel
         public ImportPopupViewModel(IDatabaseService _databaseService)
         {
             databaseService = _databaseService;
+            persons = databaseService.GetAllPeople();
             this.reset();
         }
+
 
         public void reset()
         {
@@ -25,6 +28,9 @@ namespace Avatab.ViewModel
         private IDatabaseService databaseService;
 
         [ObservableProperty]
+        private DataTemplate currentContent;
+
+        [ObservableProperty]
         private bool isImportFromUsosTogled;
 
         [ObservableProperty]
@@ -36,13 +42,26 @@ namespace Avatab.ViewModel
         [ObservableProperty]
         private List<DBLecture> lectures;
 
-        private DBPerson person;
+        private List<DBPerson> persons;
+
+        [ObservableProperty]
+        private List<DBPerson> filteredPeople;
+
+        [ObservableProperty]
+        private bool isAddPersonMode = true;
+
+        [ObservableProperty]
+        private bool isImportScheduleMode = false;
+
+        [ObservableProperty]
+        private ObservableCollection<OptionItem> options = new();
+
+        [ObservableProperty]
+        private OptionItem selectedOption;
 
         [RelayCommand]
         private async Task PickFile()
         {
-            person = new DBPerson { name = Name };
-            databaseService.AddPerson(person);
             try
             {
                 var result = await FilePicker.PickAsync();
@@ -96,7 +115,7 @@ namespace Avatab.ViewModel
                     timeEnd = new TimeSpan(int.Parse(timeEnd[0]), int.Parse(timeEnd[1]), 0),
                     date = date,
                     place = parts[10].Trim() + ' ' + parts[11].Trim(),
-                    parentId = person.Id
+                    parentId = SelectedOption.Id
                 });
             }
 
@@ -125,10 +144,48 @@ namespace Avatab.ViewModel
                     timeEnd = new TimeSpan(int.Parse(timeEnd[0]), int.Parse(timeEnd[1]), 0),
                     date = date,
                     place = parts[5].Trim(),
-                    parentId = person.Id
+                    parentId = SelectedOption.Id
                 });
             }
         }
 
+        [RelayCommand]
+        private void ShowAddPerson()
+        {
+            IsAddPersonMode = true;
+            IsImportScheduleMode = false;
+        }
+
+        [RelayCommand]
+        private void ShowImportSchedule()
+        {
+            IsAddPersonMode = false;
+            IsImportScheduleMode = true;
+            persons = databaseService.GetAllPeople();
+            Options.Clear();
+            foreach (var person in persons)
+            {
+                Options.Add(new OptionItem
+                {
+                    Id = person.Id,
+                    Name = person.name
+                });
+            }
+        }
+
+        [RelayCommand]
+        private void AddNew()
+        {
+            databaseService.AddPerson(new DBPerson { name = Name });
+        }
+
     }
+    public class OptionItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+
+        public override string ToString() => Name;
+    }
+
 }

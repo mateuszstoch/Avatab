@@ -13,74 +13,70 @@
             <Setter Property="TextColor" Value="White" />
             <Setter Property="CornerRadius" Value="8" />
             <Setter Property="HeightRequest" Value="44" />
-            <Style.Triggers>
-                <DataTrigger TargetType="Button"
-                             Binding="{Binding Name}"
-                             Value="">
-                    <Setter Property="IsEnabled" Value="False" />
-                    <Setter Property="BackgroundColor" Value="#B0BEC5" />
-                    <Setter Property="TextColor" Value="#EEEEEE" />
-                </DataTrigger>
-            </Style.Triggers>
         </Style>
     </mct:Popup.Resources>
 
-    <VerticalStackLayout Padding="24" Spacing="10"
+    <VerticalStackLayout Padding="24" Spacing="12"
                          BackgroundColor="White"
                          WidthRequest="320"
+                         MinimumHeightRequest="300"
                          HorizontalOptions="Center">
 
-        <!-- Title -->
-        <Label Text="Import Data"
-               FontSize="24"
-               FontAttributes="Bold"
-               HorizontalOptions="Center"
-               TextColor="#333" />
-
-        <!-- Name Input -->
-        <Label Text="Name"
-               FontSize="16"
-               FontAttributes="Bold"
-               TextColor="#555" />
-        <Entry Text="{Binding Name}"
-               Placeholder="Enter name"
-               BackgroundColor="#f5f5f5"
-               TextColor="Black"
-               HeightRequest="40" />
-
-        <!-- File Picker -->
-        <Grid ColumnDefinitions="Auto,*">
-            <Label Text="{Binding IsImportFromUsosTogled, Converter={StaticResource BoolToStringConverter}}"
-                Grid.Column="0"
-                   FontSize="16"
-                   FontAttributes="Bold"
-                   TextColor="#555" 
-                   VerticalTextAlignment="Center"/>
-            <Switch IsToggled="{Binding IsImportFromUsosTogled}" Grid.Column="1"/>
-        </Grid>
-        <Button Text="Pick CSV File"
-                Command="{Binding PickFileCommand}"
-                Style="{StaticResource ActionButtonStyle}" />
-
-        <!-- Status -->
-        <Label Text="{Binding ImportStatus}"
-               FontSize="14"
-               TextColor="Green"
-               IsVisible="{Binding ImportStatus, Converter={StaticResource StringNotEmptyConverter}}" />
-
-        <!-- Footer Buttons -->
-        <HorizontalStackLayout Spacing="12"
-                               HorizontalOptions="Center">
-            <Button Text="Close"
-                    Clicked="OnCloseClicked"
-                    BackgroundColor="#E0E0E0"
-                    TextColor="Black"
-                    WidthRequest="100"
-                    CornerRadius="8" />
-
-            <Button Text="Import"
-                    Clicked="OnImportClicked"
+        <!-- Dwa przyciski wyboru -->
+        <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+            <Button Text="Add Person"
+                    Command="{Binding ShowAddPersonCommand}"
+                    Style="{StaticResource ActionButtonStyle}" />
+            <Button Text="Import Schedule"
+                    Command="{Binding ShowImportScheduleCommand}"
                     Style="{StaticResource ActionButtonStyle}" />
         </HorizontalStackLayout>
+
+        <!-- Sekcja: Add Person -->
+        <StackLayout IsVisible="{Binding IsAddPersonMode}" Spacing="10">
+            <Label Text="Name"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="#555" />
+            <Entry Text="{Binding Name}"
+                   Placeholder="Enter name"
+                   BackgroundColor="#f5f5f5"
+                   TextColor="Black"
+                   HeightRequest="40" />
+            <Button Text="➕ Add New"
+                    Command="{Binding AddNewCommand}"
+                    Style="{StaticResource ActionButtonStyle}" />
+        </StackLayout>
+
+        <!-- Sekcja: Import Schedule -->
+        <StackLayout IsVisible="{Binding IsImportScheduleMode}" Spacing="12">
+            <Grid ColumnDefinitions="Auto,*">
+                <Label Text="{Binding IsImportFromUsosTogled, Converter={StaticResource BoolToStringConverter}}"
+                       Grid.Column="0"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="#555"
+                       VerticalTextAlignment="Center"/>
+                <Switch IsToggled="{Binding IsImportFromUsosTogled}" Grid.Column="1"/>
+            </Grid>
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Picker Title="Kliknij aby wybrać"
+                    ItemsSource="{Binding Options}"
+                    SelectedItem="{Binding SelectedOption, Mode=TwoWay}" />
+                <Button Text="Import CSV File"
+                        Command="{Binding PickFileCommand}"
+                        Style="{StaticResource ActionButtonStyle}"
+                   
+                       />
+
+            </HorizontalStackLayout>
+            <Label Text="{Binding ImportStatus}"
+                   FontSize="14"
+                   TextColor="Green"
+                   IsVisible="{Binding ImportStatus, Converter={StaticResource StringNotEmptyConverter}}" />
+            
+        </StackLayout>
+
+       
     </VerticalStackLayout>
 </mct:Popup>
