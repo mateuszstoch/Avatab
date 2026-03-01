@@ -27,3 +27,9 @@ For now the app is only avaliable for android, as a student, I don't have spare 
 
 For **questions**, **collaborations**, or **commercial inquiries**, please reach out at:
 📬 [mateusz.stoch75@gmail.com](mailto:mateusz.stoch75@gmail.com)
+
+### ⚖️ License & Acknowledgements
+
+This project uses the **[Syncfusion Toolkit for .NET MAUI](https://github.com/syncfusion/maui-toolkit)** under the **MIT License**. No commercial license key is required for this specific toolkit.
+
+> *Attribution to Syncfusion is maintained within the project's third-party notices.*
